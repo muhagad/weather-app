@@ -1,7 +1,7 @@
 /* Global Variables */
-const APIKey = '&appid=670612393986081d2f032dd55d06e35b'
+const APIKey = 'us&appid=670612393986081d2f032dd55d06e35b&units=metric'
 
-const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=`
+const baseURL = `https://api.openweathermap.org/data/2.5/weather?zip=`
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = (d.getMonth()+1)+'.'+ d.getDate()+'.'+ d.getFullYear();
@@ -29,18 +29,18 @@ const postTempData = async (url='', data={}) => {
 
     try {
         const newData = await response.json()
-        // console.log(newData)
+        console.log(newData)
         return newData
 
     } catch(error) {console.log('error', error)}
 }
 
 function performAction(e) {
-    const city = document.getElementById('city').value;
+    const zip = document.getElementById('zip').value;
     const content = document.getElementById('feelings').value;
-    if ( city!= '' || content != '') {
-        getTemp(baseURL+city+APIKey).then(function(data){
-            // console.log('datatopost', data)
+    if ( zip!= '' || content != '') {
+        getTemp(baseURL+zip+','+APIKey).then(function(data){
+            console.log('datatopost', data)
             // const celisusTemp = (data.main.temp-32) / 1.8
             postTempData('/addTempData', {temperature: data.main.temp, date: newDate, user_response:content})
             updateUI()
